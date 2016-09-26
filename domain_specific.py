@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def get_labels(dataset):
     rng = pd.date_range('1/1/2014', '1/8/2014', freq='1Min')
     labels = pd.DataFrame(0, index=rng, columns=[1, 2, 3, 4])

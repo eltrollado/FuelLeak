@@ -12,16 +12,26 @@ from pybrain.structure.modules import LSTMLayer
 import pickle
 
 
+
+# a=  fs.get_data_set(3)
+# a['pistols'].plot()
+# a['refuel'].plot()
+# a['tank'].plot()
+# plt.show()
+# exit(1)
+
 dataset = 3
-container = 3
+container = 2
+
+testdataset = 3
+testcontainer = 2
 
 df = fs.extract_container_data(dataset)
 df2 = fs.extract_container_data(2)
 
 
-testd = nn.calculate_diff(df[4])
+testd = nn.calculate_diff(df[1])
 test_data = nn.convert_to_windows(testd)
-
 
 lg3 = nn.calculate_diff(df[3])
 lg1 = nn.calculate_diff(df[1])
