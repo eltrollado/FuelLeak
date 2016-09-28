@@ -29,6 +29,32 @@ def make_traing_dataset(frames, labels, window=5):
     return ds
 
 
+def make_traing_dataset_zipped(frames, window=5):
+    # type: (list, list, int) -> SupervisedDataSet
+    ds = ClassificationDataSet(5,nb_classes=2, class_labels=['normal','leak'])
+
+    for frame, label in frames:
+        for i in range(len(frame.index) - window):
+            sample = frame.ix[i:i+window].tolist()
+            output = label.ix[i+window]
+            ds.appendLinked(sample,[output])
+    ds.calculateStatistics()
+    return ds
+
+
+def make_classif_traing_dataset(frames, labels, window=5):
+    # type: (list, list, int) -> SupervisedDataSet
+    ds = ClassificationDataSet(5,target=2, class_labels=['normal','leak'])
+
+    for frame, label in zip(frames,labels):
+        for i in range(len(frame.index) - window):
+            sample = frame.ix[i:i+window].tolist()
+            output = label.ix[i+window]
+            ds.appendLinked(sample,[output, 1 - output])
+    ds.calculateStatistics()
+    return ds
+
+
 def calculate_diff(df):
     # type: (pandas.DataFrame) -> pandas.TimeSeries
     df['b'] = df[1] - df[2] + df[3]
@@ -42,3 +68,6 @@ def log_scale(x):
         return -math.log10(-x + 1)
     else:
         return 0
+
+
+
